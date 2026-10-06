@@ -1,0 +1,104 @@
+{
+  "backend": "keyword overlap",
+  "mean_ms": {
+    "embed": 0.0,
+    "retrieve": 0.1,
+    "llm": 5283.6,
+    "total": 5283.7
+  },
+  "results": [
+    {
+      "query": "Why is goodput more useful than raw throughput?",
+      "answer": "Based on the provided context, **Goodput** is more useful than raw throughput because it focuses on the specific metrics that define a system's operational state and reliability.\n\nAccording to the text:\n*   **Goodput** counts only requests per second that met the **TTFT** (Throughput Target for Functionality) and **TPOT** (Throughput Target for Performance) targets.\n*   **Raw throughput** ignores SLOs (Service Level Objectives) and throughput at saturation.\n\nTherefore, Goodput is more useful because it ensures that the system's performance and functionality remain within acceptable limits (SLOs) even when the system is operating at its maximum capacity (saturation), whereas raw throughput can be misleading at that point.",
+      "contexts": [
+        {
+          "id": "goodput",
+          "score": 1.0
+        },
+        {
+          "id": "paged",
+          "score": 0.0
+        },
+        {
+          "id": "radix",
+          "score": 0.0
+        }
+      ],
+      "embed_backend": "keyword overlap",
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 0.1,
+        "llm": 5716.1,
+        "total": 5716.2
+      },
+      "server_timings": {
+        "prompt_n": 151,
+        "prompt_ms": 1200.777,
+        "predicted_n": 154,
+        "predicted_ms": 4286.506
+      }
+    },
+    {
+      "query": "What problem does PagedAttention actually solve?",
+      "answer": "PagedAttention solves the problem of **internal fragmentation in GPU memory** caused by storing the Key-Value (KV) cache in non-contiguous pages.\n\nBy utilizing non-contiguous pages, the model avoids the wasted space that would otherwise exist if all KV cache entries were stored contiguously in a single contiguous block of memory. This optimization allows the engine to utilize more of the available GPU memory, which is critical for high-performance training and inference tasks.",
+      "contexts": [
+        {
+          "id": "paged",
+          "score": 1.0
+        },
+        {
+          "id": "radix",
+          "score": 0.0
+        },
+        {
+          "id": "disagg",
+          "score": 0.0
+        }
+      ],
+      "embed_backend": "keyword overlap",
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 0.1,
+        "llm": 3512.9,
+        "total": 3513.1
+      },
+      "server_timings": {
+        "prompt_n": 114,
+        "prompt_ms": 880.28,
+        "predicted_n": 93,
+        "predicted_ms": 2561.24
+      }
+    },
+    {
+      "query": "When does splitting prefill and decode help?",
+      "answer": "Splitting prefill and decode helps when the model's **prefill (inference) and decode (inference) phases are computationally and bandwidth-boundly incompatible**, or when the **prefill phase is the bottleneck** itself.\n\nHere is the breakdown based on the provided context:\n\n1.  **Prefill is Compute-bound**: Prefill involves heavy computation (often involving the entire model or a large subset of it) that requires significant CPU/GPU resources. If the model is too large or the inference time is very long, the compute cost of prefilling the entire model exceeds the available resources or time limits.\n2.  **Prefill is the bottleneck**: If the prefill phase is the limiting factor for the model's performance (e.g., the model takes too long to load or the inference time is capped), splitting allows the engine to process the remaining compute-bound part of the model (the decode) in parallel or sequentially, effectively bypassing the compute cost of",
+      "contexts": [
+        {
+          "id": "disagg",
+          "score": 2.0
+        },
+        {
+          "id": "radix",
+          "score": 1.0
+        },
+        {
+          "id": "batching",
+          "score": 1.0
+        }
+      ],
+      "embed_backend": "keyword overlap",
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 0.1,
+        "llm": 6621.7,
+        "total": 6621.8
+      },
+      "server_timings": {
+        "prompt_n": 113,
+        "prompt_ms": 916.729,
+        "predicted_n": 200,
+        "predicted_ms": 5626.633
+      }
+    }
+  ]
+}
