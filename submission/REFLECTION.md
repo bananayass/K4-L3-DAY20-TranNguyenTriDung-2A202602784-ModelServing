@@ -135,19 +135,21 @@ Tám luồng tương ứng với 8 lõi vật lý của máy và cho tốc độ
 > Bỏ trống nếu không làm. Xem `docs/bonus/README.md`. Đừng làm hết — **một** finding sâu
 > ăn điểm hơn năm bảng nông.
 
-**Đã làm:** _<B1 build-compare / B2 sweep nào / B4 challenge nào / B5 lựa chọn nào>_
+**Đã làm:** B2 sweep-batch; B3 before/after từ sweep này; B5/C9 embedding serving bằng make serve-embed và make embed-demo.
 
 **Numbers:**
 
 ```
-before:  <số>
-after:   <số>
-speedup: <X.Y>×
+before:  139.4 tok/s (`-b 512 -ub 256`, pp512)
+after:   286.8 tok/s (`-b 512 -ub 512`, pp512)
+speedup: 2.06×
 ```
 
 **Điều này nói lên gì mà deck chưa nói:**
 
-_(để trống nếu bạn không làm phần này)_
+Trên Qwen3.5 0.8B Q4_K_M, threads=8, ngl=0, giữ -b=512 và tăng -ub từ 256 lên 512 làm prefill 512 token tăng từ 139.4 lên 286.8 tok/s (2.06×). Với micro-batch 512, prompt này được xử lý trong một chunk thay vì hai chunk 256 token, nên giảm overhead giữa các lượt prefill. Đây là throughput của llama-bench; sweep chưa đo P95 khi có cạnh tranh, nên mình chưa kết luận cấu hình này tốt hơn cho server đông người dùng.
+
+Với C9, make embed-demo dùng Qwen chat GGUF ở pooling mode: throughput là 8.5 texts/s ở batch 1, đạt cao nhất 9.7 ở batch 2, rồi giảm còn 9.5, 8.8 và 7.9 ở batch 4, 8 và 16. Embedding chỉ cần một forward pass cho mỗi văn bản, nên có thể gom batch tĩnh; chat còn có vòng decode và cần continuous batching để dùng các slot hiệu quả. Hai kết quả có đơn vị và workload khác nhau nên không so tốc độ trực tiếp. Đây cũng chỉ là decoder được pooling, không phải embedding model chuyên dụng; top match có cosine 0.896 nhưng các kết quả kế tiếp là 0.850 và 0.821, nên demo chưa chứng minh chất lượng retrieval production.
 
 ---
 

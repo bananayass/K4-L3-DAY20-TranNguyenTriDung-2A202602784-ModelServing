@@ -1,0 +1,32 @@
+[
+  {
+    "batch": 128,
+    "ubatch": 128,
+    "pp_tok_s": 212.13
+  },
+  {
+    "batch": 256,
+    "ubatch": 256,
+    "pp_tok_s": 191.25
+  },
+  {
+    "batch": 512,
+    "ubatch": 256,
+    "pp_tok_s": 139.37
+  },
+  {
+    "batch": 512,
+    "ubatch": 512,
+    "pp_tok_s": 286.81
+  },
+  {
+    "batch": 1024,
+    "ubatch": 512,
+    "pp_tok_s": 196.29
+  },
+  {
+    "batch": 2048,
+    "ubatch": 512,
+    "pp_tok_s": 199.63
+  }
+]
